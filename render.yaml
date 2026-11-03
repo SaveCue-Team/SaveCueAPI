@@ -1,0 +1,21 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: savecue-api
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    domains:
+      - savecue.id.vn
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: BOOKMARKS_FILE
+        value: ./data/bookmarks.json
+# PORT do Render cung cấp. Không gắn persistent disk: dữ liệu JSON là tạm thời.
